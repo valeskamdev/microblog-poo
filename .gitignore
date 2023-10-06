@@ -1,0 +1,4 @@
+/vendor/
+*.bak
+.idea/
+.DS_Store
