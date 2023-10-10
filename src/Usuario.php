@@ -35,6 +35,11 @@ class Usuario
         }
     }
 
+    public function codificaSenha(string $senha) : string
+    {
+        return password_hash($senha, PASSWORD_DEFAULT);
+    }
+
     public function getId(): int
     {
         return $this->id;
@@ -42,7 +47,7 @@ class Usuario
 
     public function setId(int $id): void
     {
-        $this->id = $id;
+        $this->id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
     }
 
     public function getNome(): string
@@ -52,7 +57,7 @@ class Usuario
 
     public function setNome(string $nome): void
     {
-        $this->nome = $nome;
+        $this->nome = filter_var($nome, FILTER_SANITIZE_SPECIAL_CHARS);
     }
 
     public function getEmail(): string
@@ -62,7 +67,7 @@ class Usuario
 
     public function setEmail(string $email): void
     {
-        $this->email = $email;
+        $this->email = filter_var($email, FILTER_SANITIZE_EMAIL);
     }
 
     public function getSenha(): string
@@ -82,7 +87,7 @@ class Usuario
 
     public function setTipo(string $tipo): void
     {
-        $this->tipo = $tipo;
+        $this->tipo = filter_var($tipo, FILTER_SANITIZE_SPECIAL_CHARS);;
     }
 
     public function getConexao(): PDO
