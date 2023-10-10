@@ -2,6 +2,7 @@
 
 namespace Microblog;
 
+use Exception;
 use PDO;
 
 class Usuario
@@ -16,6 +17,22 @@ class Usuario
     public function __construct()
     {
         $this->conexao = Banco::conecta();
+    }
+
+    public function inserir() : void
+    {
+        $sql = "INSER INTO usuarios(nome, email, senha, tipo) VALUES (:nome, :email, :senha, :tipo)";
+
+        try {
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->bindValue(":nome", $this->nome, PDO::PARAM_STR);
+            $stmt->bindValue(":email", $this->email, PDO::PARAM_STR);
+            $stmt->bindValue(":senha", $this->senha, PDO::PARAM_STR);
+            $stmt->bindValue(":tipo", $this->tipo, PDO::PARAM_STR);
+            $stmt->execute();
+        } catch (Exception $e) {
+            die("Erro ao inserir usuário: " . $e->getMessage());
+        }
     }
 
     public function getId(): int
