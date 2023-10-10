@@ -21,7 +21,7 @@ class Usuario
 
     public function inserir() : void
     {
-        $sql = "INSER INTO usuarios(nome, email, senha, tipo) VALUES (:nome, :email, :senha, :tipo)";
+        $sql = "INSERT INTO usuarios(nome, email, senha, tipo) VALUES (:nome, :email, :senha, :tipo)";
 
         try {
             $stmt = $this->conexao->prepare($sql);

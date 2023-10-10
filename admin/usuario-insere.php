@@ -9,9 +9,11 @@ if (isset($_POST['inserir'])) {
   $usuario->setEmail($_POST['email']);
   $usuario->setTipo($_POST['tipo']);
   $usuario->setSenha($usuario->codificaSenha($_POST['senha']));
+
+  $usuario->inserir();
+  header("location:usuarios.php");
 }
 ?>
-
 
 <div class="row">
 	<article class="col-12 bg-white rounded shadow my-1 py-4">
