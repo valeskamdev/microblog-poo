@@ -35,6 +35,21 @@ class Usuario
         }
     }
 
+    public function listar() : array
+    {
+        $sql = "SELECT * FROM usuarios ORDER BY nome";
+
+        try {
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->execute();
+
+            $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            die("Erro ao inserir usuário: " . $e->getMessage());
+        }
+        return $resultado;
+    }
+
     public function codificaSenha(string $senha) : string
     {
         return password_hash($senha, PASSWORD_DEFAULT);
