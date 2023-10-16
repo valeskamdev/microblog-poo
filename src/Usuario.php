@@ -65,9 +65,37 @@ class Usuario
         return $result;
     }
 
+    public function  atualizar() : void
+    {
+        $sql = "UPDATE usuarios 
+                SET nome = :nome, email = :email, senha = :senha, tipo = :tipo 
+                WHERE id = :id";
+
+        try {
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->bindValue(":id", $this->id, PDO::PARAM_INT);
+            $stmt->bindValue(":nome", $this->nome, PDO::PARAM_STR);
+            $stmt->bindValue(":email", $this->email, PDO::PARAM_STR);
+            $stmt->bindValue(":senha", $this->senha, PDO::PARAM_STR);
+            $stmt->bindValue(":tipo", $this->tipo, PDO::PARAM_STR);
+            $stmt->execute();
+        } catch (Exception $e) {
+            die("Erro ao atualizar usuário: " . $e->getMessage());
+        }
+    }
+
     public function codificaSenha(string $senha) : string
     {
         return password_hash($senha, PASSWORD_DEFAULT);
+    }
+
+    public function vefificaSenha(string $senhaFormulario, string $senhaBanco) : string
+    {
+        if (password_verify($senhaFormulario, $senhaBanco)) {
+            return $senhaBanco;
+        } else {
+            return $this->codificaSenha($senhaFormulario);
+        }
     }
 
     public function getId(): int
@@ -107,7 +135,7 @@ class Usuario
 
     public function setSenha(string $senha): void
     {
-        $this->senha = $senha;
+        $this->senha = filter_var($senha, FILTER_SANITIZE_SPECIAL_CHARS);;
     }
 
     public function getTipo(): string

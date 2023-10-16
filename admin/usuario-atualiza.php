@@ -7,6 +7,30 @@ require_once "../inc/cabecalho-admin.php";
 $usuario = new Usuario();
 $usuario->setId($_GET['id']);
 $dados = $usuario->listarUm();
+
+if (isset($_POST['atualizar'])) {
+    $usuario->setNome($_POST['nome']);
+    $usuario->setEmail($_POST['email']);
+    $usuario->setTipo($_POST['tipo']);
+
+    /**
+     * se o campo senha do formulário estiver vazio,
+     * significa que o usuário NÃO MUDOU A SENHA
+     */
+
+    if (empty($_POST['senha'])) {
+        $usuario->setSenha($dados['senha']);
+    } else {
+        /*
+       * caso contrário, se o usuário digitou alguma coisa no campo,
+       * precisaremos verificar o que foi digitado
+       */
+          $usuario->setSenha($usuario->vefificaSenha($_POST['senha'], $dados['senha']));
+    }
+
+    $usuario->atualizar();
+    header("location:usuarios.php");
+}
 ?>
 
 
