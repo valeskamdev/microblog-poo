@@ -50,6 +50,21 @@ class Usuario
         return $resultado;
     }
 
+    public function listarUm() : array
+    {
+        $sql = "SELECT * FROM usuarios WHERE id = :id";
+
+        try {
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->bindValue(":id", $this->id, PDO::PARAM_INT);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            die("Erro ao carregar dados: " . $e->getMessage());
+        }
+        return $result;
+    }
+
     public function codificaSenha(string $senha) : string
     {
         return password_hash($senha, PASSWORD_DEFAULT);
