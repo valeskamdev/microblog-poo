@@ -84,6 +84,19 @@ class Usuario
         }
     }
 
+    public function excluir() : void
+    {
+        $sql = "DELETE FROM usuarios WHERE id = :id";
+
+        try {
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->bindValue(":id", $this->id, PDO::PARAM_INT);
+            $stmt->execute();
+        } catch (Exception $e) {
+            die("Erro ao excluir usuário: " . $e->getMessage());
+        }
+    }
+
     public function codificaSenha(string $senha) : string
     {
         return password_hash($senha, PASSWORD_DEFAULT);
