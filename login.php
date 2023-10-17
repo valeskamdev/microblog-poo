@@ -2,7 +2,6 @@
 
 use Microblog\ControleDeAcesso;
 use Microblog\Usuario;
-use Microblog\Utilitarios;
 
 require_once "inc/cabecalho.php";
 
@@ -14,8 +13,10 @@ if( isset($_GET["campos_obrigatorios"]) ){
     $feedback = "Preencha e-mail e senha!";
 } elseif (isset($_GET["dados_incorretos"])) {
   $feedback = "Email ou senha inválidos!";
-} else {
-  $feedback = "uepa";
+} elseif (isset($_GET["logout"])) {
+  $feedback = "Você saiu do sistema!";
+} elseif (isset($_GET["acesso_proibido"])) {
+    $feedback = "Você deve logar primeiro!";
 }
 ?>
 
@@ -65,10 +66,10 @@ if( isset($_GET["campos_obrigatorios"]) ){
                       $sessao->login($dados['id'], $dados['nome'], $dados['tipo']);
                       header("location:admin/index.php");
                   } else {
+                      // - Está correta? Iniciar o processo de login
+                      // - Não está? Continuará em login.php
                       header("location:login?dados_incorretos");
                   }
-                  // - Está correta? Iniciar o processo de login
-                  // - Não está? Continuará em login.php
               }
           }
       }

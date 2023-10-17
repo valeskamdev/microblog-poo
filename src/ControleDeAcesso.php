@@ -24,7 +24,7 @@ final class ControleDeAcesso
              * o formulário de login e pare completamente o script
              */
             session_destroy();
-            header("location:../login.php");
+            header("location:../login.php?acesso_proibido");
             die();
         }
     }
@@ -34,5 +34,12 @@ final class ControleDeAcesso
         $_SESSION["id"] = $id;
         $_SESSION["nome"] = $nome;
         $_SESSION["tipo"] = $tipo;
+    }
+
+    public function logout() : void
+    {
+        session_start();
+        session_destroy();
+        header("location:../login.php?logout");
     }
 }
