@@ -1,5 +1,7 @@
 <?php
 
+use Microblog\Usuario;
+
 require_once "inc/cabecalho.php";
 
 /**
@@ -8,6 +10,17 @@ require_once "inc/cabecalho.php";
  */
 if (isset($_GET["campos_obrigatorios"])) {
     $feedback = "Você deve logar primeiro";
+} else {
+  // capturar email
+    $usuario = new Usuario();
+    $usuario->setEmail($_POST['email']);
+
+  // buscar o usuário/email no banco de dados
+  // se não existir o usuário/email, continuára em login.php
+  //se existir:
+    // - verificar a senha
+    // - esta correta? iniciar processo de login
+    // - não esta? continuará no login.php
 }
 ?>
 
