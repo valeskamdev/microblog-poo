@@ -1,6 +1,7 @@
 <?php
 
 use Microblog\Usuario;
+require_once "../inc/cabecalho-admin.php";
 
 require_once "../vendor/autoload.php";
 

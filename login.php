@@ -1,6 +1,8 @@
 <?php
 
+use Microblog\ControleDeAcesso;
 use Microblog\Usuario;
+use Microblog\Utilitarios;
 
 require_once "inc/cabecalho.php";
 
@@ -8,19 +10,12 @@ require_once "inc/cabecalho.php";
  * programação das mensagens de feedback (campos obrigatórios,
  * dados incorretos, saiu do sistema e etc)
  */
-if (isset($_GET["campos_obrigatorios"])) {
-    $feedback = "Você deve logar primeiro";
+if( isset($_GET["campos_obrigatorios"]) ){
+    $feedback = "Preencha e-mail e senha!";
+} elseif (isset($_GET["dados_incorretos"])) {
+  $feedback = "Email ou senha inválidos!";
 } else {
-  // capturar email
-    $usuario = new Usuario();
-    $usuario->setEmail($_POST['email']);
-
-  // buscar o usuário/email no banco de dados
-  // se não existir o usuário/email, continuára em login.php
-  //se existir:
-    // - verificar a senha
-    // - esta correta? iniciar processo de login
-    // - não esta? continuará no login.php
+  $feedback = "uepa";
 }
 ?>
 
@@ -48,13 +43,34 @@ if (isset($_GET["campos_obrigatorios"])) {
 
 			</form>
       <?php
-      if (isset($_POST["entrar"])) {
-        // verifica se os campos foram preenchidos
-        if (empty($_POST['email']) || empty($_POST['senha'])) {
-          header("location:login.php?campos_obrigatorios  ");
-        } else {
-          echo "ok, você pode logar!";
-        }
+      if(isset($_POST['entrar'])){
+          if( empty($_POST['email']) || empty($_POST['senha']) ){
+              header("location:login.php?campos_obrigatorios");
+          } else {
+              // Capturar o e-mail
+              $usuario = new Usuario;
+              $usuario->setEmail($_POST['email']);
+
+              // Buscar o usuário/e-mail no Banco de Dados
+              $dados = $usuario->buscar();
+
+              // Se não existir o usuário/e-mail, continuará em login.php
+              if (!$dados) {
+                header("location:login.php?dados_incorretos");
+              } else {
+                  // Se existir:
+                  // - verificar a senha
+                  if (password_verify($_POST['senha'], $dados['senha'])) {
+                      $sessao = new ControleDeAcesso();
+                      $sessao->login($dados['id'], $dados['nome'], $dados['tipo']);
+                      header("location:admin/index.php");
+                  } else {
+                      header("location:login?dados_incorretos");
+                  }
+                  // - Está correta? Iniciar o processo de login
+                  // - Não está? Continuará em login.php
+              }
+          }
       }
       ?>
     </div>
