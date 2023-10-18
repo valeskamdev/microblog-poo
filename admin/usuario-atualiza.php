@@ -15,7 +15,8 @@ if (isset($_POST['atualizar'])) {
 
     /**
      * se o campo senha do formulário estiver vazio,
-     * significa que o usuário NÃO MUDOU A SENHA
+     * significa que o usuário NÃO MUDOU A SENHA,
+     * portanto, precisamos manter a senha que já existe no banco de dados
      */
 
     if (empty($_POST['senha'])) {
