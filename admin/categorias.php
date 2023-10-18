@@ -1,8 +1,12 @@
-<?php 
+<?php
+
+use Microblog\Categoria;
+
 require_once "../inc/cabecalho-admin.php";
+
+$categoria = new Categoria();
+$todasCategorias = $categoria->listar();
 ?>
-
-
 <div class="row">
 	<article class="col-12 bg-white rounded shadow my-1 py-4">
 		
@@ -27,9 +31,9 @@ require_once "../inc/cabecalho-admin.php";
 				</thead>
 
 				<tbody>
-
+          <?php foreach ($todasCategorias as $categoria) : ?>
 					<tr>
-						<td> Nome... </td>
+						<td><?=$categoria['nome']?></td>
 						<td class="text-center">
 							<a class="btn btn-warning" 
 							href="categoria-atualiza.php">
@@ -42,6 +46,7 @@ require_once "../inc/cabecalho-admin.php";
 							</a>
 						</td>
 					</tr>
+        <?php endforeach; ?>
 
 				</tbody>                
 			</table>

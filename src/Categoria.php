@@ -28,6 +28,20 @@ class Categoria
         }
     }
 
+    public function listar() : array
+    {
+        $sql = "SELECT * FROM categorias ORDER BY nome";
+
+        try {
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            die("Erro ao listar categorias: " . $e->getMessage());
+        }
+        return $result;
+    }
+
     public function getId(): int
     {
         return $this->id;
