@@ -29,6 +29,14 @@ final class ControleDeAcesso
         }
     }
 
+    public function verificaAcessoAdmin() : void
+    {
+        if ($_SESSION['tipo'] !== 'admin') {
+            header("location:nao-autorizado.php");
+            die();
+        }
+    }
+
     public function login(int $id, string $nome, string $tipo) : void
     {
         $_SESSION["id"] = $id;

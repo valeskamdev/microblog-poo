@@ -3,7 +3,7 @@
 
 <footer class="footer mt-auto py-3 bg-light border-top">
     <div class="container text-center">
-        Microblog é um site fictício desenvolvido para fins didáticos | Senac Penha &copy; 2023
+        Microblog é um site fictício desenvolvido para fins didáticos | Senac Penha &copy; <?=date("Y")?>
     </div>
 </footer>
 

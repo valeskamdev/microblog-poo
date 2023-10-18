@@ -23,10 +23,12 @@ require_once "../inc/cabecalho-admin.php";
                 <i class="bi bi-newspaper"></i> <br>
                 Notícias
             </a>
+            <?php if($_SESSION['tipo'] === "admin") { ?>
 			<a class="btn btn-dark bg-gradient btn-lg" href="usuarios.php">
                 <i class="bi bi-people"></i> <br>
                 Usuários
             </a>
+            <?php } ?>
         </div>
     </div>
 </article>

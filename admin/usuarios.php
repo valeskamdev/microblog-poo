@@ -5,6 +5,14 @@ require_once "../inc/cabecalho-admin.php";
 
 require_once "../vendor/autoload.php";
 
+/**
+ * verificando se quem está acessando essa página tem permissão de acesso
+ * (se o if do método verificaAcessoAdmin() retornar true, então o script
+ * continua normalmente, caso contrário, o usuário é redirecionado para
+ * a página nao-autorizado.php)
+ */
+$sessao->verificaAcessoAdmin();
+
 $usuario = new Usuario();
 $listaDeUsuario = $usuario->listar();
 ?>
