@@ -1,8 +1,16 @@
-<?php 
+<?php
+
+use Microblog\Categoria;
+
 require_once "../inc/cabecalho-admin.php";
+
+if (isset($_POST['inserir'])) {
+  $categoria = new Categoria();
+  $categoria->setNome($_POST['nome']);
+  $categoria->inserir();
+  header("location:categorias.php");
+}
 ?>
-
-
 <div class="row">
 	<article class="col-12 bg-white rounded shadow my-1 py-4">
 		
