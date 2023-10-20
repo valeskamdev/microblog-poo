@@ -57,6 +57,22 @@ class Categoria
         return $result;
     }
 
+    public function atualizar() : void
+    {
+        $sql = "UPDATE categorias 
+                SET nome = :nome
+                WHERE id = :id";
+
+        try {
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->bindValue(":nome", $this->nome, PDO::PARAM_STR);
+            $stmt->bindValue(":id", $this->id, PDO::PARAM_INT);
+            $stmt->execute();
+        } catch (Exception $e) {
+            die("Erro ao atualizar categoria: " . $e->getMessage());
+        }
+    }
+
     public function getId(): int
     {
         return $this->id;

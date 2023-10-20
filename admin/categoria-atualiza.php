@@ -7,6 +7,12 @@ require_once "../inc/cabecalho-admin.php";
 $categoria = new Categoria();
 $categoria->setId($_GET['id']);
 $umaCategoria = $categoria->listarUm();
+
+if (isset($_POST['atualizar'])) {
+    $categoria->setNome($_POST['nome']);
+    $categoria->atualizar();
+    header("location:categorias.php?categoria_atualizada");
+}
 ?>
 
 
