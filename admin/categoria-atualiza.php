@@ -1,5 +1,12 @@
-<?php 
+<?php
+
+use Microblog\Categoria;
+
 require_once "../inc/cabecalho-admin.php";
+
+$categoria = new Categoria();
+$categoria->setId($_GET['id']);
+$umaCategoria = $categoria->listarUm();
 ?>
 
 
@@ -14,7 +21,7 @@ require_once "../inc/cabecalho-admin.php";
 
 			<div class="mb-3">
 				<label class="form-label" for="nome">Nome:</label>
-				<input class="form-control" type="text" id="nome" name="nome" required>
+				<input class="form-control" type="text" id="nome" name="nome" value="<?=$umaCategoria['nome']?>" required>
 			</div>
 			
 			<button class="btn btn-primary" name="atualizar"><i class="bi bi-arrow-clockwise"></i> Atualizar</button>
@@ -24,7 +31,7 @@ require_once "../inc/cabecalho-admin.php";
 </div>
 
 
-<?php 
+<?php
 require_once "../inc/rodape-admin.php";
 ?>
 

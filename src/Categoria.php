@@ -42,6 +42,21 @@ class Categoria
         return $result;
     }
 
+    public function listarUm() : array
+    {
+        $sql = "SELECT * FROM categorias WHERE id = :id";
+
+        try {
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->bindValue(":id", $this->id, PDO::PARAM_INT);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            die("Erro ao listar uma categoria: " . $e->getMessage());
+        }
+        return $result;
+    }
+
     public function getId(): int
     {
         return $this->id;
