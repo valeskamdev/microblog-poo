@@ -94,7 +94,7 @@ final class Categoria
 
     public function setId(int $id): void
     {
-        $this->id = filter_var($id, FILTER_SANITIZE_SPECIAL_CHARS);
+        $this->id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
     }
 
     public function getNome(): string
