@@ -41,9 +41,11 @@ if (isset($_GET['sair'])) $sessao->logout();
             <li class="nav-item">
                 <a class="nav-link" href="meu-perfil.php">Meu perfil</a>
             </li>
+            <?php if($_SESSION['tipo'] === "admin") { ?>
             <li class="nav-item">
                 <a class="nav-link" href="categorias.php">Categorias</a>
             </li>
+            <?php } ?>
             <li class="nav-item">
                 <a class="nav-link" href="noticias.php">Notícias</a>
             </li>

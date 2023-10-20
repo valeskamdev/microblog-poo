@@ -5,7 +5,7 @@ namespace Microblog;
 use Exception;
 use PDO;
 
-class Categoria
+final class Categoria
 {
     private int $id;
     private string $nome;
@@ -70,6 +70,20 @@ class Categoria
             $stmt->execute();
         } catch (Exception $e) {
             die("Erro ao atualizar categoria: " . $e->getMessage());
+        }
+    }
+
+    public function excluir() : void
+    {
+        $sql = "DELETE FROM categorias
+                WHERE id = :id";
+
+        try {
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->bindValue(":id", $this->id, PDO::PARAM_INT);
+            $stmt->execute();
+        } catch (Exception $e) {
+            die("Erro ao excluir categoria: " . $e->getMessage());
         }
     }
 

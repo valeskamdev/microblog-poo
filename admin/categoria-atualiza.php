@@ -1,8 +1,12 @@
 <?php
 
 use Microblog\Categoria;
+use Microblog\ControleDeAcesso;
 
 require_once "../inc/cabecalho-admin.php";
+
+$sessao = new ControleDeAcesso();
+$sessao->verificaAcessoAdmin();
 
 $categoria = new Categoria();
 $categoria->setId($_GET['id']);

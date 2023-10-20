@@ -5,7 +5,7 @@ namespace Microblog;
 use Exception;
 use PDO;
 
-class Usuario
+final class Usuario
 {
     private int $id;
     private string $nome;

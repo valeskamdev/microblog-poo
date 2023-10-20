@@ -1,8 +1,12 @@
 <?php
 
 use Microblog\Categoria;
+use Microblog\ControleDeAcesso;
 
 require_once "../inc/cabecalho-admin.php";
+
+$sessao = new ControleDeAcesso();
+$sessao->verificaAcessoAdmin();
 
 if (isset($_POST['inserir'])) {
   $categoria = new Categoria();
