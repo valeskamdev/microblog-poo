@@ -4,7 +4,7 @@ namespace Microblog;
 
 use PDO;
 
-class Noticias
+class Noticia
 {
     private int $id;
     private string $data;
@@ -13,10 +13,27 @@ class Noticias
     private string $resumo;
     private string $imagem;
     private string $destaque;
-    private int $categoriaId;
-    public Usuario $usuario;
     private string $termo;
     private PDO $conexao;
+
+    /**
+     * Propriedades cujo o tipo são ASSOSCIADOS
+     * á classes já existentes. Isso permitirá usar
+     * recursos destas classes á partir de Noticia
+     */
+    private Categoria $categoria;
+    public Usuario $usuario;
+
+    public function __construct()
+    {
+        /**
+         * Ao criar um objeto Noticia, aproveitamos para
+         * instanciar objetos de Usuario e Categoria
+         */
+        $this->usuario = new Usuario();
+        $this->categoria = new Categoria();
+        $this->conexao = Banco::conecta();
+    }
 
     public function getId(): int
     {
@@ -25,7 +42,7 @@ class Noticias
 
     public function setId(int $id): void
     {
-        $this->id = $id;
+        $this->id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
     }
 
     public function getData(): string
@@ -35,7 +52,7 @@ class Noticias
 
     public function setData(string $data): void
     {
-        $this->data = $data;
+        $this->data = filter_var($data, FILTER_SANITIZE_SPECIAL_CHARS);
     }
 
     public function getTitulo(): string
@@ -45,7 +62,7 @@ class Noticias
 
     public function setTitulo(string $titulo): void
     {
-        $this->titulo = $titulo;
+        $this->titulo = filter_var($titulo, FILTER_SANITIZE_SPECIAL_CHARS);
     }
 
     public function getTexto(): string
@@ -55,7 +72,7 @@ class Noticias
 
     public function setTexto(string $texto): void
     {
-        $this->texto = $texto;
+        $this->texto =  filter_var($texto, FILTER_SANITIZE_SPECIAL_CHARS);
     }
 
     public function getResumo(): string
@@ -65,7 +82,7 @@ class Noticias
 
     public function setResumo(string $resumo): void
     {
-        $this->resumo = $resumo;
+        $this->resumo = filter_var($resumo, FILTER_SANITIZE_SPECIAL_CHARS);
     }
 
     public function getImagem(): string
@@ -75,7 +92,7 @@ class Noticias
 
     public function setImagem(string $imagem): void
     {
-        $this->imagem = $imagem;
+        $this->imagem = filter_var($imagem, FILTER_SANITIZE_SPECIAL_CHARS);
     }
 
     public function getDestaque(): string
@@ -85,17 +102,17 @@ class Noticias
 
     public function setDestaque(string $destaque): void
     {
-        $this->destaque = $destaque;
+        $this->destaque = filter_var($destaque, FILTER_SANITIZE_SPECIAL_CHARS);
     }
 
-    public function getCategoriaId(): int
+    public function getCategoria(): Categoria
     {
-        return $this->categoriaId;
+        return $this->categoria;
     }
 
-    public function setCategoriaId(int $categoriaId): void
+    public function setCategoria(Categoria $categoria): void
     {
-        $this->categoriaId = $categoriaId;
+        $this->categoria = $categoria;
     }
 
     public function getUsuario(): Usuario
@@ -115,7 +132,7 @@ class Noticias
 
     public function setTermo(string $termo): void
     {
-        $this->termo = $termo;
+        $this->termo = filter_var($termo, FILTER_SANITIZE_SPECIAL_CHARS);
     }
 
     public function getConexao(): PDO
