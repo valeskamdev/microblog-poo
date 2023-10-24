@@ -15,7 +15,7 @@ $todasCategorias = $categoria->listar();
 	<article class="col-12 bg-white rounded shadow my-1 py-4">
 		
 		<h2 class="text-center">
-		Categorias <span class="badge bg-dark">X</span>
+		Categorias <span class="badge bg-dark"><?=count($todasCategorias)?></span>
 		</h2>
 
 		<p class="text-center mt-5">
