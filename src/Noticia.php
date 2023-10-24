@@ -2,6 +2,7 @@
 
 namespace Microblog;
 
+use Exception;
 use PDO;
 
 class Noticia
@@ -21,7 +22,7 @@ class Noticia
      * á classes já existentes. Isso permitirá usar
      * recursos destas classes á partir de Noticia
      */
-    private Categoria $categoria;
+    public Categoria $categoria;
     public Usuario $usuario;
 
     public function __construct()
@@ -33,6 +34,30 @@ class Noticia
         $this->usuario = new Usuario();
         $this->categoria = new Categoria();
         $this->conexao = Banco::conecta();
+    }
+
+    public function inserir() : void
+    {
+        $sql = "INSERT INTO noticias(titulo, texto, resumo, imagem, destaque, usuario_id, categoria_id)
+                VALUES (:titulo, :texto, :resumo, :imagem, :destaque, :usuario_id, :categoria_id)";
+
+        try {
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->bindValue(":titulo", $this->titulo, PDO::PARAM_STR);
+            $stmt->bindValue(":texto", $this->texto, PDO::PARAM_STR);
+            $stmt->bindValue(":resumo", $this->resumo, PDO::PARAM_STR);
+            $stmt->bindValue(":imagem", $this->imagem, PDO::PARAM_STR);
+            $stmt->bindValue(":destaque", $this->destaque, PDO::PARAM_STR);
+            /**
+             * Chamamos os getters de ID do Usuario e de Categoria, para só depois associar os
+             * valores aos pârametros da consulta SQL. Isso é possível devido á associação entre as Classes
+             */
+            $stmt->bindValue(":usuario_id", $this->usuario->getId(), PDO::PARAM_INT);
+            $stmt->bindValue(":categoria_id", $this->categoria->getId(), PDO::PARAM_INT);
+            $stmt->execute();
+        } catch (Exception $e) {
+            die("Erro ao inserir notícia: " . $e->getMessage());
+        }
     }
 
     public function getId(): int
