@@ -60,6 +60,32 @@ class Noticia
         }
     }
 
+    public function listar() : array
+    {
+        // Se o tipo do usuário for admin
+        if ($this->usuario->getTipo() === 'admin') {
+            // Considere o sql abaixo
+
+            /**
+             * SQL para usuário ADMIN (visualizar todas noticias)
+             * - titulo, data, autor/nome, destaque, id da noticia
+             */
+            $sql = "SELECT noticias.id, noticias.titulo, noticias.data, usuarios.nome AS autor, noticias.destaque
+                FROM noticias INNER JOIN usuarios ON noticias.usuario_id = usuarios.id ORDER BY data DESC";
+        } else {
+            // Senão, considere o sql abaixo
+
+            /**
+             * SQL para usuário EDITOR (visualizar apenas suas noticias)
+             * - titulo, data, destaque, id da noticia
+             */
+            $sql = "SELECT id, titulo, data, destaque
+                FROM noticias WHERE usuario_id = :usuario_id
+                ORDER BY data DESC";
+        }
+
+    }
+
     public  function upload(array $imagem) : void
     {
         // Definindo os tipos válidos
