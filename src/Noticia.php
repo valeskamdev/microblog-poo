@@ -84,6 +84,19 @@ class Noticia
                 ORDER BY data DESC";
         }
 
+        try {
+            $stmt = $this->conexao->prepare($sql);
+            if ($this->usuario->getTipo() !== 'admin') {
+                $stmt->bindValue(":usuario_id", $this->usuario->getId(), PDO::PARAM_INT);
+            }
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (Exception $e) {
+            die("Erro ao listar notícias: " . $e->getMessage());
+        }
+        return $result;
+
     }
 
     public  function upload(array $imagem) : void

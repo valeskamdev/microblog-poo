@@ -7,8 +7,15 @@ require_once "../inc/cabecalho-admin.php";
 $noticia = new Noticia();
 
 // Capturando o ID da notícia que será atualizada
+/**
+ * Capturando o id do tipo do usuário logado
+ * e associando estes valores ás propriedades do objeto
+ */
 $noticia->usuario->setId($_SESSION['id']);
 $noticia->usuario->setTipo($_SESSION['tipo']);
+
+$listaDeNoticias = $noticia->listar();
+var_dump($listaDeNoticias);
 ?>
 
 
