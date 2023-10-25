@@ -7,24 +7,34 @@ $noticia = new Noticia();
 $todasCategoria = $noticia->categoria->listar();
 
 if (isset($_POST['inserir'])) {
-  $noticia->setTitulo($_POST['titulo']);
-  $noticia->setTexto($_POST['texto']);
-  $noticia->setResumo($_POST['resumo']);
-  $noticia->setDestaque($_POST['destaque']);
+    $noticia->setTitulo($_POST['titulo']);
+    $noticia->setTexto($_POST['texto']);
+    $noticia->setResumo($_POST['resumo']);
+    $noticia->setDestaque($_POST['destaque']);
 
-  // ID do usuário que está inserindo a notícia
-   $noticia->usuario->setId($_SESSION['id']);
-  // ID da categoria escolhida para a notícia
+    // ID do usuário que está inserindo a notícia
+    $noticia->usuario->setId($_SESSION['id']);
+    // ID da categoria escolhida para a notícia
     $noticia->categoria->setId($_POST['categoria']);
 
-    var_dump($noticia);
+    /**
+     * Sobre a imagem
+     * - Capturar o arquivo de imagem e enviar para o servidor
+     * - Capturar o nome/extensao e enviar para o banco de dados
+     */
 
- /**
-  * Sobre a imagem
-  * - Capturar o arquivo de imagem e enviar para o servidor
-  * - Capturar o nome/extensao e enviar para o banco de dados
-  */
+    // Capturar o arquivo de imagem
+    $imagem = $_FILES['imagem'];
 
+    // Enviar para o servidor
+    $noticia->upload($imagem);
+
+    // Captura o nome/extensao e enviar para o objeto de Noticia
+    $noticia->setImagem($imagem["name"]);
+
+    // Executar no banco e redirecionar
+    $noticia->inserir();
+    header("location:noticias.php ");
 }
 ?>
 <div class="row">

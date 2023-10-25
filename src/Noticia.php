@@ -60,6 +60,41 @@ class Noticia
         }
     }
 
+    public  function upload(array $imagem) : void
+    {
+        // Definindo os tipos válidos
+
+        $tiposValidos = [
+          "image/png",
+          "image/jpeg",
+          "image/gif",
+          "image/svg+xml"
+        ];
+
+        // Verificando se o arquivo NÃO É um dos tipos válidos
+        if (!in_array($imagem['type'], $tiposValidos)) {
+            die(
+              // Se não for, exibe um alerta e volta para a página anterior
+              "<script>
+                alert('Tipo de arquivo inválido!');
+                history.back()
+              </script>"
+            );
+        }
+
+        // Acessando APENAS o nome/extensão do arquivo
+        $nome = $imagem['name'];
+
+        // Acessando os dados de acesso/armazenamento temporários
+        $temporario = $imagem['tmp_name'];
+
+        // Definindo a pasta de destino das imagens do site
+        $pastaFinal = "../imagens/" . $nome;
+
+        // Movendo o arquivo da pasta temporária para a pasta final/destino
+        move_uploaded_file($temporario, $pastaFinal);
+    }
+
     public function getId(): int
     {
         return $this->id;
