@@ -153,6 +153,27 @@ class Noticia
         }
     }
 
+    public function excluir() : void
+    {
+        if ($this->usuario->getTipo() === 'admin') {
+            $sql = "DELETE FROM noticias WHERE id = :id";
+        } else {
+            $sql = "DELETE FROM noticias WHERE id = :id AND usuario_id = :usuario_id";
+        }
+
+        try {
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->bindValue(":id", $this->id, PDO::PARAM_INT);
+
+            if ($this->usuario->getTipo() !== 'admin') {
+                $stmt->bindValue(":usuario_id", $this->usuario->getId(), PDO::PARAM_INT);
+            }
+            $stmt->execute();
+        } catch (Exception $e) {
+            die("Erro ao excluir notícia: " . $e->getMessage());
+        }
+    }
+
     public  function upload(array $imagem) : void
     {
         // Definindo os tipos válidos
