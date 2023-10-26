@@ -24,42 +24,14 @@ $destaques = $noticia->listarDestaques();
 		</div>
   <?php endforeach; ?>
 		<!-- FIM Card -->
-</div>        
-        
-            <hr class="my-5 w-50 mx-auto">
-        
-
-        <div class="row my-1">
-            <div class="col-12 px-md-1">
-                <div class="list-group">
-                    <h2 class="fs-6 text-center text-muted">Todas as notícias</h2>
-                    <a href="noticia.php" class="list-group-item list-group-item-action">
-                         <h3 class="fs-6"><time>12/12/2012</time> - Título da notícia</h3>
-                        <p>Resumo da notícia</p>
-                    </a>
-                    <a href="noticia.php" class="list-group-item list-group-item-action">
-                         <h3 class="fs-6"><time>12/12/2012</time> - Título da notícia</h3>
-                        <p>Resumo da notícia</p>
-                    </a>
-                    <a href="noticia.php" class="list-group-item list-group-item-action">
-                         <h3 class="fs-6"><time>12/12/2012</time> - Título da notícia</h3>
-                        <p>Resumo da notícia</p>
-                    </a>
-                    <a href="noticia.php" class="list-group-item list-group-item-action">
-                         <h3 class="fs-6"><time>12/12/2012</time> - Título da notícia</h3>
-                        <p>Resumo da notícia</p>
-                    </a>
-                    <a href="noticia.php" class="list-group-item list-group-item-action">
-                         <h3 class="fs-6"><time>12/12/2012</time> - Título da notícia</h3>
-                        <p>Resumo da notícia</p>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-
-
+</div>
 <?php 
+require_once "inc/todas.php";
 require_once "inc/rodape.php";
 ?>
+
+
+
+
+
 
