@@ -122,6 +122,37 @@ class Noticia
         return $result;
     }
 
+    public function atualizar() : void
+    {
+        if ($this->usuario->getTipo() === 'admin') {
+            $sql = "UPDATE noticias
+                    SET titulo = :titulo, texto = :texto, resumo = :resumo, imagem = :imagem, categoria_id = :categoria_id, destaque = :destaque
+                    WHERE id = :id";
+        } else {
+            $sql = "UPDATE noticias
+                    SET titulo = :titulo, texto = :texto, resumo = :resumo, imagem = :imagem, categoria_id = :categoria_id, destaque = :destaque
+                    WHERE id = :id AND usuario_id = :usuario_id";
+        }
+
+        try {
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->bindValue(":id", $this->id, PDO::PARAM_INT);
+            $stmt->bindValue(":titulo", $this->titulo, PDO::PARAM_STR);
+            $stmt->bindValue(":texto", $this->texto, PDO::PARAM_STR);
+            $stmt->bindValue(":resumo", $this->resumo, PDO::PARAM_STR);
+            $stmt->bindValue(":imagem", $this->imagem, PDO::PARAM_STR);
+            $stmt->bindValue(":destaque", $this->destaque, PDO::PARAM_STR);
+            $stmt->bindValue(":categoria_id", $this->categoria->getId(), PDO::PARAM_INT);
+
+            if ($this->usuario->getTipo() !== 'admin') {
+                $stmt->bindValue(":usuario_id", $this->usuario->getId(), PDO::PARAM_INT);
+            }
+            $stmt->execute();
+        } catch (Exception $e) {
+            die("Erro ao atualizar notícia: " . $e->getMessage());
+        }
+    }
+
     public  function upload(array $imagem) : void
     {
         // Definindo os tipos válidos
