@@ -240,6 +240,23 @@ class Noticia
         return $result;
     }
 
+    public function listarDetalhes() : array
+    {
+        $sql = "SELECT noticias.id, noticias.titulo, noticias.data, usuarios.nome AS autor, noticias.texto, noticias.imagem
+                FROM noticias INNER JOIN usuarios ON noticias.usuario_id = usuarios.id
+                WHERE noticias.id = :id";
+
+        try {
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->bindValue(":id", $this->id, PDO::PARAM_INT);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            die("Erro ao abrir notícia: " . $e->getMessage());
+        }
+        return $result;
+    }
+
     public function getId(): int
     {
         return $this->id;
