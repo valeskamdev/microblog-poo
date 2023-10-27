@@ -15,4 +15,12 @@ abstract class Utilitarios
         var_dump($dados);
         echo "</pre>";
     }
+
+    public static function formatarDataHora(string $dataHora) : string
+    {
+        $dataHora = explode(" ", $dataHora);
+        $data = explode("-", $dataHora[0]);
+        $hora = explode(":", $dataHora[1]);
+        return $data[2] . "/" . $data[1] . "/" . $data[0] . " " . $hora[0] . ":" . $hora[1];
+    }
 }
