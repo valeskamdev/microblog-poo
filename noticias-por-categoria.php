@@ -1,5 +1,9 @@
 <?php 
 require_once "inc/cabecalho.php";
+$noticia->categoria->setId($_GET['id']);
+$dados = $noticia->listarPorCategoria();
+
+var_dump($dados);
 ?>
 
 

@@ -257,6 +257,25 @@ class Noticia
         return $result;
     }
 
+    public function listarPorCategoria() : array
+    {
+        $sql = "SELECT noticias.id, noticias.titulo, noticias.data, usuarios.nome AS autor, categorias.nome AS categoria
+                FROM noticias 
+                INNER JOIN usuarios ON noticias.usuario_id = usuarios.id
+                INNER JOIN categorias ON noticias.categoria_id = categorias.id  
+                WHERE noticias.categoria_id = :categoria_id";
+
+        try {
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->bindValue(":categoria_id", $this->categoria->getId(), PDO::PARAM_INT);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            die("Erro ao listar notícias por categoria: " . $e->getMessage());
+        }
+        return $result;
+    }
+
     public function getId(): int
     {
         return $this->id;
