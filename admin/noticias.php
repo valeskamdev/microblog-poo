@@ -1,6 +1,7 @@
 <?php
 
 use Microblog\Noticia;
+use Microblog\Utilitarios;
 
 require_once "../inc/cabecalho-admin.php";
 
@@ -51,7 +52,7 @@ $listaDeNoticias = $noticia->listar();
 
           <tr>
             <td><?=$noticia['titulo']?></td>
-            <td><?=$noticia['data']?></td>
+            <td><?=Utilitarios::formatarDataHora($noticia['data'])?></td>
               <?php
               if ($_SESSION['tipo'] === 'admin') { ?>
                 <td><?=$noticia['autor']?></td>
