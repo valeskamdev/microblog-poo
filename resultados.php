@@ -2,6 +2,7 @@
 require_once "inc/cabecalho.php";
 
 $noticia->setTermo($_GET['busca']);
+$resultado = $noticia->busca();
 ?>
 
 

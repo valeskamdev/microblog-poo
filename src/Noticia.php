@@ -276,6 +276,26 @@ class Noticia
         return $result;
     }
 
+    public function busca() : array
+    {
+        $sql = "SELECT id, titulo, data, resumo FROM noticias 
+                WHERE titulo LIKE :termo 
+                OR resumo LIKE :termo
+                OR texto LIKE :termo 
+                ORDER BY data DESC";
+
+        try {
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->bindValue(":termo", "%" . $this->getTermo() . "%", PDO::PARAM_STR);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            die("Erro ao buscar notícias: " . $e->getMessage());
+        }
+        return $result;
+    }
+
+
     public function getId(): int
     {
         return $this->id;
