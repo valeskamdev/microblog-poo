@@ -1,4 +1,6 @@
 <?php
+// Output Buffer (gerenciamento de memória de saída)
+ob_start(); // inicia o buffer de saída
 require_once "vendor/autoload.php";
 use Microblog\Noticia;
 
